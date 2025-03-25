@@ -67,18 +67,27 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'your_database',
+        'NAME': 'Users',
+        'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': os.getenv('MONGODB_URI'),
-        }
+            'host': 'mongodb://root:example@mongodb:27017',
+        } 
     }
 }
+
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 
+AUTH_USER_MODEL = 'api.MyUser'
+
+
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -95,6 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
