@@ -1,4 +1,3 @@
-# backend/api/views.py
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework.decorators import api_view
 from rest_framework.response import Response

@@ -1,15 +1,12 @@
-# backend/api/models.py
 import bson
 
 def generate_object_id():
     return str(bson.ObjectId())
 
 
-# backend/api/models.py
 from djongo import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-# Define the helper function (as shown above)
 import bson
 def generate_object_id():
     return str(bson.ObjectId())
@@ -37,7 +34,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     id = models.CharField(
         primary_key=True,
         max_length=24,
-        default=generate_object_id,  # Use the helper function here instead of a lambda
+        default=generate_object_id,
         editable=False
     )
     username = models.CharField(max_length=150, unique=True)
