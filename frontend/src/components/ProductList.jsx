@@ -1,0 +1,152 @@
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import "./ProductList.css";
+import { fetchProducts, fetchCategories } from "../services/api";
+import LoadingSpinner from "./LoadingSpinner";
+
+const ProductList = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [categories, setCategories] = useState(["All"]);
+  
+  // Create a ref to store the timeout
+  const searchTimeoutRef = useRef(null);
+
+  const loadProducts = useCallback(async (query) => {
+    try {
+      setLoading(true);
+      const data = await fetchProducts(selectedCategory, query);
+      setProducts(data);
+      setError(null);
+    } catch (err) {
+      setError("Failed to load products. Please try again later.");
+      console.error("Error loading products:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [selectedCategory]);
+
+  // Load categories on component mount
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const data = await fetchCategories();
+        setCategories(["All", ...data]);
+      } catch (err) {
+        console.error("Error loading categories:", err);
+      }
+    };
+    loadCategories();
+  }, []);
+
+  // Handle category change
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setSearchQuery(""); // Clear search when changing category
+    loadProducts(""); // Load products for the new category
+  };
+
+  // Debounced search handler
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    // Clear any existing timeout
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    // Set new timeout
+    searchTimeoutRef.current = setTimeout(() => {
+      loadProducts(value);
+    }, 300); // Reduced debounce time for better responsiveness
+  };
+
+  // Initial load and load when category or search changes
+  useEffect(() => {
+    loadProducts(searchQuery);
+  }, [loadProducts, selectedCategory, searchQuery]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div className="product-page">
+      <div className="filters">
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search tech products..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+        </div>
+        <div className="categories">
+          {categories.map(category => (
+            <button
+              key={category}
+              className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
+              onClick={() => handleCategoryChange(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {loading ? (
+        <LoadingSpinner />
+      ) : error ? (
+        <div className="error-message">{error}</div>
+      ) : (
+        <div className="product-grid">
+          {products.length > 0 ? (
+            products.map(product => (
+              <div key={product.id} className="product-card">
+                <img src={product.image} alt={product.title} className="product-image" />
+                <h3>{product.title}</h3>
+                <p className="category-tag">{product.category}</p>
+                <p className="description">{product.description}</p>
+                <div className="rating">
+                  <span>Rating: {product.rating.rate} ({product.rating.count} reviews)</span>
+                </div>
+                <div className="price-comparison">
+                  <h4>Price Comparison:</h4>
+                  {product.priceComparisons.map((comparison, index) => (
+                    <div key={index} className={`price-row ${index === 0 ? 'best-price' : ''}`}>
+                      <span className="retailer-name">{comparison.retailer}</span>
+                      <span className="price-amount">${comparison.price}</span>
+                      <a 
+                        href={comparison.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className={`view-deal ${!comparison.inStock ? 'out-of-stock' : ''}`}
+                        title={`Search for ${product.title} on ${comparison.retailer}`}
+                      >
+                        {comparison.inStock ? 'View Deal' : 'Out of Stock'}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="no-results">
+              <p>No tech products found matching your search.</p>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ProductList; 
