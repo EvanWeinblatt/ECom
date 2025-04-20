@@ -11,6 +11,10 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const handleAddToCart = () => {
+    navigate("/cart");
+  };
+
   return (
     <nav>
       <div>
@@ -24,7 +28,12 @@ const Navbar = () => {
           </>
         )}
       </div>
-      {token && <button onClick={handleLogout}>Logout</button>}
+      {token && (
+        <div>
+          <button onClick={handleAddToCart} style={{ marginRight: '10px' }}>Go to Cart</button>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      )}
     </nav>
   );
 };

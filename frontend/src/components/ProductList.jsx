@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./ProductList.css";
 import { fetchProducts, fetchCategories } from "../services/api";
 import LoadingSpinner from "./LoadingSpinner";
+import Toast from "./Toast";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -10,6 +11,9 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState(["All"]);
+  const [cart, setCart] = useState([]);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   
   // Create a ref to store the timeout
   const searchTimeoutRef = useRef(null);
@@ -28,6 +32,29 @@ const ProductList = () => {
     }
   }, [selectedCategory]);
 
+  const handleAddToCart = (product, comparison) => {
+    const cartItem = {
+      id: product.id,
+      name: product.title,
+      image: product.image,
+      price: parseFloat(comparison.price), // Convert string price to number
+      retailer: comparison.retailer,
+      url: comparison.url
+    };
+    
+    // Get existing cart from localStorage
+    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const newCart = [...existingCart, cartItem];
+    
+    // Update both state and localStorage
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
+    
+    // Show toast notification
+    setToastMessage(`${product.title} added to cart`);
+    setShowToast(true);
+  };
+
   // Load categories on component mount
   useEffect(() => {
     const loadCategories = async () => {
@@ -39,6 +66,18 @@ const ProductList = () => {
       }
     };
     loadCategories();
+
+    // Load cart from localStorage
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      try {
+        const parsedCart = JSON.parse(savedCart);
+        setCart(parsedCart);
+      } catch (error) {
+        console.error('Error parsing cart:', error);
+        setCart([]);
+      }
+    }
   }, []);
 
   // Handle category change
@@ -80,6 +119,15 @@ const ProductList = () => {
 
   return (
     <div className="product-page">
+      {showToast && (
+        <Toast 
+          message={toastMessage} 
+          onClose={() => setShowToast(false)} 
+        />
+      )}
+      <div className="page-header">
+        <h3>Find the best deals on your favorite tech products</h3>
+      </div>
       <div className="filters">
         <div className="search-bar">
           <input
@@ -124,15 +172,26 @@ const ProductList = () => {
                     <div key={index} className={`price-row ${index === 0 ? 'best-price' : ''}`}>
                       <span className="retailer-name">{comparison.retailer}</span>
                       <span className="price-amount">${comparison.price}</span>
-                      <a 
-                        href={comparison.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className={`view-deal ${!comparison.inStock ? 'out-of-stock' : ''}`}
-                        title={`Search for ${product.title} on ${comparison.retailer}`}
-                      >
-                        {comparison.inStock ? 'View Deal' : 'Out of Stock'}
-                      </a>
+                      <div className="action-buttons">
+                        <a 
+                          href={comparison.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className={`view-deal ${!comparison.inStock ? 'out-of-stock' : ''}`}
+                          title={`Search for ${product.title} on ${comparison.retailer}`}
+                        >
+                          {comparison.inStock ? 'View Deal' : 'Out of Stock'}
+                        </a>
+                        {comparison.inStock && (
+                          <button 
+                            className="add-to-cart-button"
+                            onClick={() => handleAddToCart(product, comparison)}
+                            title="Add to Cart"
+                          >
+                            +
+                          </button>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
