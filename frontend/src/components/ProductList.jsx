@@ -18,10 +18,10 @@ const ProductList = () => {
   // Create a ref to store the timeout
   const searchTimeoutRef = useRef(null);
 
-  const loadProducts = useCallback(async (query) => {
+  const loadProducts = useCallback(async (query, category) => {
     try {
       setLoading(true);
-      const data = await fetchProducts(selectedCategory, query);
+      const data = await fetchProducts(category || selectedCategory, query);
       setProducts(data);
       setError(null);
     } catch (err) {
@@ -30,7 +30,7 @@ const ProductList = () => {
     } finally {
       setLoading(false);
     }
-  }, [selectedCategory]);
+  }, []);
 
   const handleAddToCart = (product, comparison) => {
     const cartItem = {
@@ -82,9 +82,11 @@ const ProductList = () => {
 
   // Handle category change
   const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
+    // Convert category to title case for consistency
+    const formattedCategory = category === 'All' ? 'All' : category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+    setSelectedCategory(formattedCategory);
     setSearchQuery(""); // Clear search when changing category
-    loadProducts(""); // Load products for the new category
+    loadProducts("", formattedCategory); // Pass the category directly to loadProducts
   };
 
   // Debounced search handler
@@ -99,13 +101,13 @@ const ProductList = () => {
 
     // Set new timeout
     searchTimeoutRef.current = setTimeout(() => {
-      loadProducts(value);
-    }, 300); // Reduced debounce time for better responsiveness
+      loadProducts(value, selectedCategory);
+    }, 300);
   };
 
   // Initial load and load when category or search changes
   useEffect(() => {
-    loadProducts(searchQuery);
+    loadProducts(searchQuery, selectedCategory);
   }, [loadProducts, selectedCategory, searchQuery]);
 
   // Cleanup timeout on unmount
