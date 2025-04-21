@@ -6,7 +6,7 @@ const WelcomePage = () => {
 
   return (
     <div className="container">
-      <h1>Welcome to Our ECom App!</h1>
+      <h1>Welcome to SimpliTech</h1>
       <div className="button-group">
         <button onClick={() => navigate("/signup")}>Sign Up</button>
         <button onClick={() => navigate("/login")}>Login</button>

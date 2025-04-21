@@ -1,27 +1,61 @@
-.toast {
+.toast-container {
   position: fixed;
-  top: 70px;
-  right: 20px;
-  color: white;
-  padding: 15px 25px;
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  animation: slideIn 0.3s ease-out;
+  top: 5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
   z-index: 1000;
+  pointer-events: none;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+}
+
+.toast {
+  color: var(--surface-color);
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-lg);
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: auto;
 }
 
 .toast.success {
-  background-color: #18baba;
+  background-color: var(--success-color);
 }
 
 .toast.error {
-  background-color: #dc3545;
+  background-color: var(--error-color);
 }
 
 .toast p {
   margin: 0;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
+  line-height: 1.5;
+}
+
+.toast::before {
+  content: '';
+  width: 1.5rem;
+  height: 1.5rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.toast.success::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'/%3E%3C/svg%3E");
+}
+
+.toast.error::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z'/%3E%3C/svg%3E");
 }
 
 @keyframes slideIn {
@@ -32,5 +66,55 @@
   to {
     transform: translateX(0);
     opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.toast.removing {
+  animation: slideOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (max-width: 768px) {
+  .toast-container {
+    top: auto;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+  }
+  
+  .toast {
+    max-width: none;
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(100%);
+      opacity: 0;
+    }
   }
 } 

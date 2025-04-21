@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./ProductList.css";
 import { fetchProducts, fetchCategories } from "../services/api";
 import LoadingSpinner from "./LoadingSpinner";
-import Toast from "./Toast";
+import { ToastContainer } from "./Toast";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -11,11 +11,23 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState(["All"]);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [toasts, setToasts] = useState([]);
   
   // Create a ref to store the timeout
   const searchTimeoutRef = useRef(null);
+
+  const addToast = (message, type = 'success') => {
+    const newToast = {
+      id: Date.now(),
+      message,
+      type
+    };
+    setToasts(currentToasts => [...currentToasts, newToast]);
+  };
+
+  const removeToast = (id) => {
+    setToasts(currentToasts => currentToasts.filter(toast => toast.id !== id));
+  };
 
   const loadProducts = useCallback(async (query, category) => {
     try {
@@ -49,8 +61,7 @@ const ProductList = () => {
     localStorage.setItem('cart', JSON.stringify(newCart));
     
     // Show toast notification
-    setToastMessage(`${product.title} added to cart`);
-    setShowToast(true);
+    addToast(`${product.title} added to cart`);
   };
 
   // Load categories on component mount
@@ -117,12 +128,10 @@ const ProductList = () => {
 
   return (
     <div className="product-page">
-      {showToast && (
-        <Toast 
-          message={toastMessage} 
-          onClose={() => setShowToast(false)} 
-        />
-      )}
+      <ToastContainer
+        toasts={toasts}
+        onClose={removeToast}
+      />
       <div className="page-header">
         <h3>Find the best deals on your favorite tech products</h3>
       </div>
@@ -157,7 +166,9 @@ const ProductList = () => {
           {products.length > 0 ? (
             products.map(product => (
               <div key={product.id} className="product-card">
-                <img src={product.image} alt={product.title} className="product-image" />
+                <div className="product-image-container">
+                  <img src={product.image} alt={product.title} className="product-image" />
+                </div>
                 <h3>{product.title}</h3>
                 <p className="category-tag">{product.category}</p>
                 <p className="description">{product.description}</p>
