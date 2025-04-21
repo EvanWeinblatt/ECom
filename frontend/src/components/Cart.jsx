@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Cart.css";
+import Toast from "./Toast";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     // Load cart items from localStorage
@@ -37,10 +40,15 @@ const Cart = () => {
   };
 
   const handleRemoveItem = (index) => {
+    const itemToRemove = cartItems[index];
     const newCartItems = [...cartItems];
     newCartItems.splice(index, 1);
     setCartItems(newCartItems);
     localStorage.setItem('cart', JSON.stringify(newCartItems));
+    
+    // Show toast notification
+    setToastMessage(`${itemToRemove.name} removed from cart`);
+    setShowToast(true);
   };
 
   const formatPrice = (price) => {
@@ -56,6 +64,13 @@ const Cart = () => {
 
   return (
     <div className="cart-container">
+      {showToast && (
+        <Toast 
+          message={toastMessage} 
+          onClose={() => setShowToast(false)}
+          type="error"
+        />
+      )}
       <div className="cart-layout">
         <div className="cart-items">
           <h1>Shopping Cart</h1>

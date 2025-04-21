@@ -1,14 +1,21 @@
 .toast {
   position: fixed;
-  top: 20px;
+  top: 70px;
   right: 20px;
-  background-color: #18baba;
   color: white;
   padding: 15px 25px;
   border-radius: 4px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   animation: slideIn 0.3s ease-out;
   z-index: 1000;
+}
+
+.toast.success {
+  background-color: #18baba;
+}
+
+.toast.error {
+  background-color: #dc3545;
 }
 
 .toast p {

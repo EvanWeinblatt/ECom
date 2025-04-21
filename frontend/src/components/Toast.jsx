@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './Toast.css';
 
-const Toast = ({ message, onClose }) => {
+const Toast = ({ message, onClose, type = 'success' }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -11,7 +11,7 @@ const Toast = ({ message, onClose }) => {
   }, [onClose]);
 
   return (
-    <div className="toast">
+    <div className={`toast ${type}`}>
       <p>{message}</p>
     </div>
   );
