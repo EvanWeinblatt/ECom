@@ -11,7 +11,6 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState(["All"]);
-  const [cart, setCart] = useState([]);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   
@@ -30,7 +29,7 @@ const ProductList = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [selectedCategory]);
 
   const handleAddToCart = (product, comparison) => {
     const cartItem = {
@@ -46,8 +45,7 @@ const ProductList = () => {
     const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
     const newCart = [...existingCart, cartItem];
     
-    // Update both state and localStorage
-    setCart(newCart);
+    // Update localStorage
     localStorage.setItem('cart', JSON.stringify(newCart));
     
     // Show toast notification
@@ -71,11 +69,9 @@ const ProductList = () => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
       try {
-        const parsedCart = JSON.parse(savedCart);
-        setCart(parsedCart);
+        JSON.parse(savedCart); // Just validate the JSON, we don't need the parsed result
       } catch (error) {
         console.error('Error parsing cart:', error);
-        setCart([]);
       }
     }
   }, []);
