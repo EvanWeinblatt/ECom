@@ -7,7 +7,7 @@ const TECH_PRODUCTS = [
     title: "MacBook Pro 14-inch M3 Pro",
     category: "Laptops",
     description: "Apple M3 Pro chip, 18GB unified memory, 512GB SSD storage, 14-inch Liquid Retina XDR display",
-    image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-m3-pro-space-select-202310?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1697311056439",
+    image: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80",
     rating: { rate: 4.8, count: 120 },
     basePrice: 1999.00
   },
@@ -16,7 +16,7 @@ const TECH_PRODUCTS = [
     title: "Dell XPS 15",
     category: "Laptops",
     description: "Intel Core i7-13700H, 16GB RAM, 1TB SSD, NVIDIA RTX 4050, 15.6\" 4K OLED",
-    image: "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/xps-15-9530/media-gallery/black/laptop-xps-15-9530-t-black-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=402&qlt=100,1&resMode=sharp2&size=402,402&chrss=full",
+    image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=800&q=80",
     rating: { rate: 4.7, count: 95 },
     basePrice: 1999.99
   },
@@ -34,7 +34,7 @@ const TECH_PRODUCTS = [
     title: "Samsung Galaxy S24 Ultra",
     category: "Smartphones",
     description: "6.8-inch Dynamic AMOLED 2X, Snapdragon 8 Gen 3, 200MP camera, S Pen included",
-    image: "https://images.samsung.com/is/image/samsung/p6pim/us/2401/gallery/us-galaxy-s24-ultra-s928-sm-s928uzsaxaa-thumb-537344344",
+    image: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6570/6570299_sd.jpg",
     rating: { rate: 4.8, count: 180 },
     basePrice: 1299.99
   },
@@ -43,7 +43,7 @@ const TECH_PRODUCTS = [
     title: "iPad Pro 12.9-inch",
     category: "Tablets",
     description: "M2 chip, 12.9-inch Liquid Retina XDR display, 256GB storage, Wi-Fi + Cellular",
-    image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-12-11-select-202210?wid=940&hei=1112&fmt=png-alpha&.v=1664411200445",
+    image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/refurb-ipad-pro-12-wifi-spacegray-2021?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1674663706569",
     rating: { rate: 4.7, count: 150 },
     basePrice: 1099.00
   },
@@ -52,7 +52,7 @@ const TECH_PRODUCTS = [
     title: "Samsung Galaxy Tab S9 Ultra",
     category: "Tablets",
     description: "14.6-inch Dynamic AMOLED 2X, Snapdragon 8 Gen 2, 12GB RAM, 512GB storage",
-    image: "https://images.samsung.com/is/image/samsung/p6pim/us/2307/gallery/us-galaxy-tab-s9-ultra-wifi-sm-x910nzaaxaa-thumb-535606160",
+    image: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/a37b0e55-056c-41ad-9dd7-b46e464e150d.jpg",
     rating: { rate: 4.6, count: 85 },
     basePrice: 1199.99
   },
@@ -61,7 +61,7 @@ const TECH_PRODUCTS = [
     title: "PlayStation 5",
     category: "Gaming",
     description: "Ultra-high speed SSD, 4K graphics, DualSense wireless controller, 825GB storage",
-    image: "https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21",
+    image: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=800&q=80",
     rating: { rate: 4.9, count: 320 },
     basePrice: 499.99
   },
@@ -70,7 +70,7 @@ const TECH_PRODUCTS = [
     title: "Xbox Series X",
     category: "Gaming",
     description: "12 Teraflops of power, 1TB SSD, 4K gaming, Backward compatibility",
-    image: "https://compass-ssl.xbox.com/assets/83/53/83534a33-0998-43dc-915a-4ec0a686d679.jpg?n=10202020_Series-X_200x200.jpg",
+    image: "https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?auto=format&fit=crop&w=800&q=80",
     rating: { rate: 4.8, count: 280 },
     basePrice: 499.99
   },
@@ -79,7 +79,7 @@ const TECH_PRODUCTS = [
     title: "Dell UltraSharp U2723QE",
     category: "Monitors",
     description: "27-inch 4K UHD IPS Black panel, USB-C connectivity, 90W power delivery",
-    image: "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u2723qe/media-gallery/black/monitor-u2723qe-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=402&qlt=100,1&resMode=sharp2&size=402,402&chrss=full",
+    image: "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u2723qe/spi/ng/monitor-u2723qe-campaign-hero-504x350-ng.psd?fmt=jpg&wid=504&hei=350",
     rating: { rate: 4.7, count: 75 },
     basePrice: 699.99
   },
@@ -88,7 +88,7 @@ const TECH_PRODUCTS = [
     title: "LG UltraFine 32UN880-B",
     category: "Monitors",
     description: "32-inch 4K UHD IPS display, USB-C connectivity, Ergo stand",
-    image: "https://www.lg.com/us/images/monitors/md08000990/gallery/medium01.jpg",
+    image: "https://m.media-amazon.com/images/I/718c9x5rZ6L.jpg",
     rating: { rate: 4.6, count: 65 },
     basePrice: 799.99
   }
