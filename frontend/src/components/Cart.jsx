@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Cart.css";
 import Toast from "./Toast";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -71,6 +73,14 @@ const Cart = () => {
           type="error"
         />
       )}
+      <div className="cart-header">
+        <button 
+          className="return-to-shopping-btn"
+          onClick={() => navigate('/home')}
+        >
+          ← Return to Shopping
+        </button>
+      </div>
       <div className="cart-layout">
         <div className="cart-items">
           <h1>Shopping Cart</h1>

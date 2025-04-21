@@ -28,8 +28,6 @@
   
 }
 
-
-
 .cart-items-list {
   display: flex;
   flex-direction: column;
@@ -147,6 +145,29 @@
 
 .checkout-button:hover {
   background-color: #149898;
+}
+
+.cart-header {
+  margin-bottom: 20px;
+}
+
+.return-to-shopping-btn {
+  background-color: #f8f9fa;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.return-to-shopping-btn:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
 }
 
 @media (max-width: 768px) {
