@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Cart.css";
-import Toast from "./Toast";
+import { ToastContainer } from "./Toast";
 
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [toasts, setToasts] = useState([]);
+
+  const addToast = (message, type = 'error') => {
+    const newToast = {
+      id: Date.now(),
+      message,
+      type
+    };
+    setToasts(currentToasts => [...currentToasts, newToast]);
+  };
+
+  const removeToast = (id) => {
+    setToasts(currentToasts => currentToasts.filter(toast => toast.id !== id));
+  };
 
   useEffect(() => {
     // Load cart items from localStorage
@@ -49,8 +61,7 @@ const Cart = () => {
     localStorage.setItem('cart', JSON.stringify(newCartItems));
     
     // Show toast notification
-    setToastMessage(`${itemToRemove.name} removed from cart`);
-    setShowToast(true);
+    addToast(`${itemToRemove.name} removed from cart`);
   };
 
   const formatPrice = (price) => {
@@ -66,13 +77,10 @@ const Cart = () => {
 
   return (
     <div className="cart-container">
-      {showToast && (
-        <Toast 
-          message={toastMessage} 
-          onClose={() => setShowToast(false)}
-          type="error"
-        />
-      )}
+      <ToastContainer
+        toasts={toasts}
+        onClose={removeToast}
+      />
       <div className="cart-header">
         <button 
           className="return-to-shopping-btn"
