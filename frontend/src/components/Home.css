@@ -1,24 +1,40 @@
 .home-container {
-  min-height: 100vh;
-  background: #f8f9fa;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
 .home-header {
-  background: white;
-  padding: 20px 20px 10px;
   text-align: center;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 3rem;
+  padding: 2rem 0;
 }
 
 .home-header h1 {
+  font-size: 3rem;
+  font-weight: 800;
   margin: 0;
-  color: #333;
-  font-size: 2.5rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: -0.02em;
 }
 
 .home-header p {
   margin: 5px 0 0;
   color: #666;
   font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 1rem;
+  }
+  
+  .home-header h1 {
+    font-size: 2rem;
+  }
 } 

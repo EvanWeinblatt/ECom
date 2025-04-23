@@ -133,6 +133,7 @@ const ProductList = () => {
         onClose={removeToast}
       />
       <div className="page-header">
+      <h1>SimpliTech Price Comparison</h1>
         <h3>Find the best deals on your favorite tech products</h3>
       </div>
       <div className="filters">
